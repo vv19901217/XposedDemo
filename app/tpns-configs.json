@@ -1,0 +1,13 @@
+{
+    "tpns": {
+        "access_id": "1500015552",
+        "access_key": "A9UCEEZ5UBX2"
+    },
+    "com.sinosoft.athene.pilot": {
+        "channel": {
+            "enable": true
+        }
+    },
+    "debug": false,
+    "version": "1.2.2.0"
+}

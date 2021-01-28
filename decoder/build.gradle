@@ -1,0 +1,121 @@
+apply plugin: 'com.android.library'
+//apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'com.jfrog.bintray'
+
+version = "0.9.11"
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11 -fexceptions -pthread"
+                /**
+                 * -DHAVE_CONFIG_H这个有个坑 lame配置这个参数编译不通过 libmad不加这个参数转码会失真
+                 */
+                cFlags "-DSTDC_HEADERS -DHAVE_CONFIG_H -DFPM_DEFAULT"
+            }
+            ndk {
+            }
+
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
+
+}
+
+
+
+//def siteUrl = 'https://github.com/fishCoder/Silk_v3_decoder'      // 项目的主页
+//def gitUrl = 'https://github.com/fishCoder/Silk_v3_decoder.git'   // Git仓库的url
+//group = "com.fulongbin.silk_v3_decoder"
+//install {
+//    repositories.mavenInstaller {
+//        pom {
+//            project {
+//                packaging 'aar'
+//                name 'silk<->pcm<->mp3'    //项目描述
+//                url siteUrl
+//                licenses {
+//                    license {
+//                        name 'the MIT licence'
+//                        url 'http://opensource.org/licenses/MIT'
+//                    }
+//                }
+//                developers {
+//                    developer {
+//                        id 'fulongbin'
+//                        name 'fulongbin'
+//                        email 'flb1019@gmail.com'
+//                    }
+//                }
+//                scm {
+//                    connection gitUrl
+//                    developerConnection gitUrl
+//                    url siteUrl
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//task javadoc(type: Javadoc) {
+//    source = android.sourceSets.main.java.srcDirs
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//}
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+//artifacts {
+//    archives javadocJar
+//    archives sourcesJar
+//}
+//
+//Properties properties = new Properties()
+//properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//bintray {
+//    user = properties.getProperty("bintray.user")
+//    key = properties.getProperty("bintray.apikey")
+//    configurations = ['archives']
+//    pkg {
+//        repo = "maven"
+//        name = "Silk_v3_mp3"    //发布到JCenter上的项目名字
+//        websiteUrl = siteUrl
+//        vcsUrl = gitUrl
+//        licenses = ["MIT"]
+//        publish = true
+//    }
+//}
